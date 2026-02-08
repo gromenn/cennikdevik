@@ -1,0 +1,2239 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA V – Pojazdy (miniatury)</title>
+  <style>
+    :root{--bg:#0b0c10;--panel:#11131a;--line:#2b2f3a;--txt:#e6e6e6;--muted:#aab0bd;--link:#8ab4ff}
+    body{font-family:system-ui,Segoe UI,Roboto,Arial; margin:16px; background:var(--bg); color:var(--txt);}
+    header{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px;}
+    input,select{padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:var(--panel); color:var(--txt);}
+    input{min-width:280px; flex:1;}
+    .small{color:var(--muted); font-size:13px;}
+    .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px;}
+    .card{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); display:flex; flex-direction:column;}
+    .thumb{width:100%; height:140px; object-fit:cover; background:#0f1117; display:block;}
+    .meta{padding:10px 12px; display:flex; flex-direction:column; gap:6px;}
+    .name{font-weight:700; margin:0; line-height:1.15;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:13px;}
+    a{color:var(--link); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    .price{color:#d7e3ff;}
+    .badge{border:1px solid var(--line); padding:2px 8px; border-radius:999px;}
+    .warn{color:#f39c12;}
+  </style>
+</head>
+<body>
+
+<header>
+  <input id="q" placeholder="Szukaj (np. Issi, Panto)..." />
+  <select id="cat"><option value="">Wszystkie kategorie</option></select>
+  <div class="small" id="count"></div>
+  <div class="small" id="status"></div>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<!-- Wklej tu CAŁĄ zawartość nowy-1.txt (HTML z forum, z ipsSpoiler...) -->
+<template id="forumDump">
+<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Panto" rel="external nofollow">Panto</a> - $1700 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Issi" rel="external nofollow">Issi</a> - $3100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Asbo" rel="external nofollow">Asbo</a> - $3700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Blista_Kanjo" rel="external nofollow">Blista Kanjo</a> - $4000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dilettante" rel="external nofollow">Dilettante</a> - $5400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Blista" rel="external nofollow">Blista</a> - $5500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rhapsody" rel="external nofollow">Rhapsody</a> - $7700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Issi_Classic" rel="external nofollow">Issi Classic</a> - $10000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Brioso_300" rel="external nofollow">Brioso 300</a> - $10200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Club" rel="external nofollow">Club</a> - $10300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Prairie" rel="external nofollow">Prairie</a> - $10900 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Weevil" rel="external nofollow">Weevil</a> - $14200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Brioso_R/A" rel="external nofollow">Brioso R/A</a> - $25800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Brioso_300_Widebody" rel="external nofollow">Brioso 300 Widebody</a> - $37200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>SEDANY</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Asea" rel="external nofollow">Asea</a> - $1700 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Emperor_(rusted)" rel="external nofollow">Emperor</a> - $2000 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ingot" rel="external nofollow">Ingot</a> - $2800 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Regina" rel="external nofollow">Regina</a> - $3800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Premier" rel="external nofollow">Premier</a> - $5100 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Asterope_GZ" rel="external nofollow">Asterope GZ</a> - $5300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Emperor_(HD_Universe)" rel="external nofollow">Emperor</a> - $6000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Intruder_(HD_Universe)" rel="external nofollow">Intruder</a> - $6300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Asterope" rel="external nofollow">Asterope</a> - $6400 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stratum_(HD_Universe)" rel="external nofollow">Stratum</a> - $7000 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Surge" rel="external nofollow">Surge</a> - $8000 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Glendale_(HD_Universe)" rel="external nofollow">Glendale</a> - $8200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Primo_(HD_Universe)" rel="external nofollow">Primo</a> - $8400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Washington" rel="external nofollow">Washington</a> - $9000 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stanier" rel="external nofollow">Stanier</a> - $10100 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Warrener_HKR" rel="external nofollow">Warrener HKR</a> - $15100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Warrener" rel="external nofollow">Warrener</a> - $15700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Chavos_V6" rel="external nofollow">Chavos V6</a> - $17100 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Fugitive" rel="external nofollow">Fugitive</a> - $29300 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Schafter_(second_generation)" rel="external nofollow">Schafter</a> - $47300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tailgater" rel="external nofollow">Tailgater</a> - $48100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vorschlaghammer" rel="external nofollow">Vorschlaghammer</a> - $60900 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Deity" rel="external nofollow">Deity</a> - $62700 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cognoscenti_55" rel="external nofollow">Cognoscenti 55</a> - $66900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tailgater_S" rel="external nofollow">Tailgater S</a> - $69200 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rhinehart" rel="external nofollow">Rhinehart</a> - $71500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stretch" rel="external nofollow">Stretch</a> - $73400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cognoscenti" rel="external nofollow">Cognoscenti</a> - $77600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cinquemila" rel="external nofollow">Cinquemila</a> - $107800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stafford" rel="external nofollow">Stafford</a> - $125300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Super_Diamond" rel="external nofollow">Super Diamond</a> - $139600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>SUV</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Habanero" rel="external nofollow">Habanero</a> - $3600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dorado" rel="external nofollow">Dorado</a> - $6000
+		</p>
+
+		<p>
+			<a href="http://Radius" rel="external nofollow">Radius</a> - $7000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Landstalker" rel="external nofollow">Landstalker</a> - $9300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Granger_3600LX" rel="external nofollow">Granger 3600LX</a> - $10000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/BeeJay_XL" rel="external nofollow">BeeJay XL</a> - $11000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Castigator" rel="external nofollow">Castigator</a> - $11800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Granger" rel="external nofollow">Granger</a> - $12100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rocoto" rel="external nofollow">Rocoto</a> - $12600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Aleutian" rel="external nofollow">Aleutian</a> - $14800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Seminole" rel="external nofollow">Seminole</a> - $14900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Mesa_(HD_Universe)" rel="external nofollow">Mesa</a> - $15000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Seminole_Frontier" rel="external nofollow">Seminole Frontier</a> - $15200 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Contender" rel="external nofollow">Contender</a> - $16000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vivanite" rel="external nofollow">Vivanite</a> - $16300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/FQ_2" rel="external nofollow">FQ 2</a> - $17100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Gresley" rel="external nofollow">Gresley</a> - $17300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Landstalker_XL" rel="external nofollow">Landstalker XL</a> - $17900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Issi_Rally" rel="external nofollow">Issi Rally</a> - $18700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Patriot" rel="external nofollow">Patriot</a> - $30500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller" rel="external nofollow">Baller</a> - $30700 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dubsta" rel="external nofollow">Dubsta</a> - $30800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dubsta_(custom)" rel="external nofollow">Dubsta</a> - $35800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Serrano" rel="external nofollow">Serrano</a> - $36000 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cavalcade" rel="external nofollow">Cavalcade</a> - $38400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller_(second_generation)" rel="external nofollow">Baller</a> - $40900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/XLS" rel="external nofollow">XLS</a> - $43100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cavalcade_(second_generation)" rel="external nofollow">Cavalcade</a> - $44200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller_LE_LWB" rel="external nofollow">Baller LE LWB</a> - $44800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller_LE" rel="external nofollow">Baller LE</a> - $52100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/I-Wagen" rel="external nofollow">I-Wagen</a> - $58400 
+		</p>
+
+		<p>
+			<a href="http://Astron" rel="external nofollow">Astron</a> - $62400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Huntley_S" rel="external nofollow">Huntley S</a> - $62600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Novak" rel="external nofollow">Novak</a> - $65700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cavalcade_XL" rel="external nofollow">Cavalcade XL</a> - $68300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller_ST-D" rel="external nofollow">Baller ST-D</a> - $73500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Baller_ST" rel="external nofollow">Baller ST</a> - $73900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Patriot_Stretch" rel="external nofollow">Patriot Stretch</a> - $80600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rebla_GTS" rel="external nofollow">Rebla GTS</a> - $81700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Toros" rel="external nofollow">Toros</a> - $226200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jubilee" rel="external nofollow">Jubilee</a> - $393500
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>COUPE</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Kanjo_SJ" rel="external nofollow">Kanjo SJ</a> - $6100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Postlude" rel="external nofollow">Postlude</a> - $7100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sentinel_XS_(HD_Universe)" rel="external nofollow">Sentinel XS</a> - $10800 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Oracle_XS" rel="external nofollow">Oracle XS</a> - $14100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Previon" rel="external nofollow">Previon</a> - $14400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Euros_X32" rel="external nofollow">Euros X32</a> - $28700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/FR36" rel="external nofollow">FR36</a> - $28800 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sentinel" rel="external nofollow">Sentinel</a> - $30900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Felon" rel="external nofollow">Felon</a> - $35100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Felon_GT" rel="external nofollow">Felon GT</a> - $42900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zion_Cabrio" rel="external nofollow">Zion Cabrio</a> - $44500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/F620" rel="external nofollow">F620</a> - $47600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Oracle" rel="external nofollow">Oracle</a> - $47900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zion" rel="external nofollow">Zion</a> - $49800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cognoscenti_Cabrio" rel="external nofollow">Cognoscenti Cabrio</a> - $60600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jackal" rel="external nofollow">Jackal</a> - $62100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Exemplar" rel="external nofollow">Exemplar</a> - $77900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Windsor_Drop" rel="external nofollow">Windsor Drop</a> - $131700
+		</p>
+
+		<p>
+			<a href="http://Windsor" rel="external nofollow">Windsor</a> - $268400
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>MUSCLE CARS</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Beater_Dukes" rel="external nofollow">Beater Dukes</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rat-Loader" rel="external nofollow">Rat-Loader</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Apocalypse_Impaler" rel="external nofollow">Apocalypse Impaler</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Voodoo_(HD_Universe)" rel="external nofollow">Voodoo</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Eudora" rel="external nofollow">Eudora</a> - $5000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Slamvan_(HD_Universe)" rel="external nofollow">Slamvan</a> - $5600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Moonbeam_(HD_Universe)" rel="external nofollow">Moonbeam</a> - $5900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Clique" rel="external nofollow">Clique</a> - $7400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Impaler" rel="external nofollow">Impaler</a> - $8300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Blade_(car)" rel="external nofollow">Blade</a> - $8400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Buccaneer_(HD_Universe)" rel="external nofollow">Buccaneer</a> - $8700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Chino" rel="external nofollow">Chino</a> - $9300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Virgo_(HD_Universe)" rel="external nofollow">Virgo</a> - $9500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hustler" rel="external nofollow">Hustler</a> - $9700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Virgo_Classic" rel="external nofollow">Virgo Classic</a> - $10200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Broadway" rel="external nofollow">Broadway</a> - $10300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Impaler_SZ" rel="external nofollow">Impaler SZ</a> - $10600 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rat-Truck" rel="external nofollow">Rat-Truck</a> - $10700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Brigham" rel="external nofollow">Brigham</a> - $11000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Impaler_LX" rel="external nofollow">Impaler LX</a> - $11900 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>  
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Faction" rel="external nofollow">Faction</a> - $12000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Greenwood_(HD_Universe)" rel="external nofollow">Greenwood</a> - $12300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="http://Picador" rel="external nofollow">Picador</a> - $13500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Yosemite" rel="external nofollow">Yosemite</a> - $13600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tulip_M-100" rel="external nofollow">Tulip M-100</a> - $13800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hotknife" rel="external nofollow">Hotknife</a> - $14400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tulip" rel="external nofollow">Tulip</a> - $14700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stallion" rel="external nofollow">Stallion</a> - $16300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tahoma_Coupe" rel="external nofollow">Tahoma Coupe</a> - $17100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vamos" rel="external nofollow">Vamos</a> - $17400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Phoenix_(HD_Universe)" rel="external nofollow">Phoenix</a> - $21100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Gauntlet_Classic" rel="external nofollow">Gauntlet Classic</a> - $21700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tampa" rel="external nofollow">Tampa</a> - $22000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sabre_GT_(HD_Universe)" rel="external nofollow">Sabre Turbo</a> - $22100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dukes_(car)" rel="external nofollow">Dukes</a> - $24000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator_FX" rel="external nofollow">Dominator FX</a> - $24600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ruiner_ZZ-8" rel="external nofollow">Ruiner ZZ-8</a> - $25700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Gauntlet" rel="external nofollow">Gauntlet</a> - $25700 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator" rel="external nofollow">Dominator</a> - $26200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hermes" rel="external nofollow">Hermes</a> - $26500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ruiner" rel="external nofollow">Ruiner</a> - $27100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="" rel="">Ruiner 2000</a> - $28200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vigero" rel="external nofollow">Vigero</a> - $30100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator_ASP" rel="external nofollow">Dominator ASP</a> - $31000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator_GTT" rel="external nofollow">Dominator GTT</a> - $31100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator_GT" rel="external nofollow">Dominator GT</a> - $31900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Deviant" rel="external nofollow">Deviant</a> - $32300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nightshade" rel="external nofollow">Nightshade</a> - $33800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dominator_GTX" rel="external nofollow">Dominator GTX</a> - $33900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ellie" rel="external nofollow">Ellie</a> - $34400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette_BlackFin" rel="external nofollow">Coquette BlackFin</a> - $35100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Buffalo_STX" rel="external nofollow">Buffalo STX</a> - $45900 
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Buffalo_EVX" rel="external nofollow">Buffalo EVX</a>- $55700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Clique_Wagon" rel="external nofollow">Clique Wagon</a> - $60000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Gauntlet_Hellfire" rel="external nofollow">Gauntlet Hellfire</a> - $66300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vigero_ZX" rel="external nofollow">Vigero ZX</a> - $122300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vigero_ZX_Convertible" rel="external nofollow">Vigero ZX Convertible</a> - $125000
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>KLASYKI SPORTOWE</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tornado_(Mariachi)" rel="external nofollow">Tornado</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tornado_(rusted)" rel="external nofollow">Tornado</a> - $3600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dynasty" rel="external nofollow">Dynasty</a> - $4500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Fagaloa" rel="external nofollow">Fagaloa</a> - $5700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Uranus_LozSpeed" rel="external nofollow">Uranus LozSpeed</a> - $6100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Manana" rel="external nofollow">Manana</a> - $6600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nebula_Turbo" rel="external nofollow">Nebula Turbo</a> - $6800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Michelli_GT" rel="external nofollow">Michelli GT</a> - $9400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Retinue_Mk_II" rel="external nofollow">Retinue Mk II</a> - $10100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cheburek" rel="external nofollow">Cheburek</a> - $10800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Pigalle" rel="external nofollow">Pigalle</a> - $11300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Savestra" rel="external nofollow">Savestra</a> - $12300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Retinue" rel="external nofollow">Retinue</a> - $13500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tornado" rel="external nofollow">Tornado</a> - $13600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zion_Classic" rel="external nofollow">Zion Classic</a> - $13800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/190z" rel="external nofollow">190z</a> - $15500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette_D1" rel="external nofollow">Coquette D1</a> - $15700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stirling_GT" rel="external nofollow">Feltzer Classic</a> - $17700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Casco" rel="external nofollow">Casco</a> - $30600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rapid_GT_Classic" rel="external nofollow">Rapid GT Classic</a> - $30700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Peyote" rel="external nofollow">Peyote</a> - $31900 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/GT500" rel="external nofollow">GT500</a> - $33000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Z-Type" rel="external nofollow">Z-Type</a> - $37100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stinger" rel="external nofollow">Stinger</a> - $37400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/JB_700W" rel="external nofollow">JB 700W</a> - $39000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Roosevelt" rel="external nofollow">Roosevelt</a> - $100000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Roosevelt_Valor" rel="external nofollow">Roosevelt Valor</a> - $100000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stinger_GT" rel="external nofollow">Stinger GT</a> - $117800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Viseris" rel="external nofollow">Viseris</a> - $133500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette_Classic" rel="external nofollow">Coquette Classic</a> - $133900 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="http://Monroe" rel="external nofollow">Monroe</a> - $134000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ardent" rel="external nofollow">Ardent</a> - $233100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Swinger" rel="external nofollow">Swinger</a> - $551400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Mamba" rel="external nofollow">Mamba</a> - $593200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Turismo_Classic" rel="external nofollow">Turismo Classic</a> - $741200 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Torero" rel="external nofollow">Torero</a> - $798600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Infernus_Classic" rel="external nofollow">Infernus Classic</a> - $804500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cheetah_Classic" rel="external nofollow">Cheetah Classic</a> - $11000000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Deluxo" rel="external nofollow">Deluxo</a> - $4500000
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>SPORTOWE </strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Blista_Compact_(HD_Universe)" rel="external nofollow">Blista Compact</a> - $5700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Futo" rel="external nofollow">Futo</a> - $6000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Futo_GTX" rel="external nofollow">Futo GTX</a> - $7000 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Buffalo_S" rel="external nofollow">Buffalo S</a> - $9000
+		</p>
+
+		<p>
+			<a href="" rel="">Sentinel Classic</a> - $13300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Raptor" rel="external nofollow">Raptor</a> - $15000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Remus" rel="external nofollow">Remus</a> - $22500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sultan_(HD_Universe)" rel="external nofollow">Sultan</a> - $24500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Buffalo_(HD_Universe)" rel="external nofollow">Buffalo</a> - $24900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/RT3000" rel="external nofollow">RT3000</a> - $25400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Fusilade" rel="external nofollow">Fusilade</a> - $25800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rapid_GT" rel="external nofollow">Rapid GT</a> - $29100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Penumbra" rel="external nofollow">Penumbra</a> - $29800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Kuruma_(HD_Universe)" rel="external nofollow">Kuruma</a> - $30700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/GB200" rel="external nofollow">GB200</a> - $31500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Calico_GTF" rel="external nofollow">Calico GTF</a> - $33100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Imorgon" rel="external nofollow">Imorgon</a> - $34700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/ZR-350" rel="external nofollow">ZR-350</a> - $34800 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Alpha_(HD_Universe)" rel="external nofollow">Alpha</a> - $34900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette" rel="external nofollow">Coquette</a> - $38900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/300R" rel="external nofollow">300R</a> - $40400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jester_Classic" rel="external nofollow">Jester Classic</a> - $41600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sugoi" rel="external nofollow">Sugoi</a> - $42200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Streiter" rel="external nofollow">Streiter</a> - $43200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Penumbra_FF" rel="external nofollow">Penumbra FF</a> - $44600 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jester_RR" rel="external nofollow">Jester RR</a> - $46800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/8F_Drafter" rel="external nofollow">8F Drafter</a> - $48300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette_D5" rel="external nofollow">Coquette D5</a> - $48400 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Schwartzer" rel="external nofollow">Schwartzer</a> - $49100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Schafter_LWB" rel="external nofollow">Schafter LWB</a> - $50100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Banshee_(HD_Universe)" rel="external nofollow">Banshee</a> - $53100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sultan_Classic" rel="external nofollow">Sultan Classic</a> - $53500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Komoda" rel="external nofollow">Komoda</a> - $53900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Euros" rel="external nofollow">Euros</a> - $55100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Raiden" rel="external nofollow">Raiden</a> - $56100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cypher" rel="external nofollow">Cypher</a> - $58200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jester" rel="external nofollow">Jester</a> - $59200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Revolter" rel="external nofollow">Revolter</a> - $59400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Massacro" rel="external nofollow">Massacro</a> - $60200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Seven-70" rel="external nofollow">Seven-70</a> - $61600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Flash_GT" rel="external nofollow">Flash GT</a> - $62500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Comet_Retro_Custom" rel="external nofollow">Comet Retro Custom</a> - $65100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sultan_RS_Classic" rel="external nofollow">Sultan RS Classic</a> - $65100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Verlierer" rel="external nofollow">Verlierer</a> - $65800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Schafter_V12" rel="external nofollow">Schafter V12</a> - $66100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/9F" rel="external nofollow">9F</a> - $66500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/9F_Cabrio" rel="external nofollow">9F Cabrio</a> - $66500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Comet" rel="external nofollow">Comet</a> - $66700 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Furore_GT" rel="external nofollow">Furore GT</a> - $68500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Growler" rel="external nofollow">Growler</a> - $68800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Coquette_D10" rel="external nofollow">Coquette D10</a> - $71000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Panthere" rel="external nofollow">Panthere</a> - $72200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vectre" rel="external nofollow">Vectre</a> - $76600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Lynx" rel="external nofollow">Lynx</a> - $78600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Elegy_RH8" rel="external nofollow">Elegy RH8</a> - $79100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Elegy_Retro_Custom" rel="external nofollow">Elegy RH5</a> - $79300 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Feltzer" rel="external nofollow">Feltzer</a> - $85600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Envisage" rel="external nofollow">Envisage</a> - $86500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Pariah" rel="external nofollow">Pariah</a> - $87200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tropos_Rallye" rel="external nofollow">Tropos Rallye</a> - $100500 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Carbonizzare" rel="external nofollow">Carbonizzare</a> - $101400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ruston" rel="external nofollow">Ruston</a> - $102300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Comet_S2" rel="external nofollow">Comet S2</a> - $103200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Surano" rel="external nofollow">Surano</a> - $104200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Omnis_e-GT" rel="external nofollow">Omnis e-GT</a> - $104800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bestia_GTS" rel="external nofollow">Bestia GTS</a> - $106100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Schlagen_GT" rel="external nofollow">Schlagen GT</a> - $106600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Neon" rel="external nofollow">Neon</a> - $109300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Jugular_(HD_Universe)" rel="external nofollow">Jugular</a> - $113300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Specter" rel="external nofollow">Specter</a> - $113800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Comet_SR" rel="external nofollow">Comet SR</a> - $116500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Comet_S2_Cabrio" rel="external nofollow">Comet S2 Cabrio</a> - $117100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Paragon_S" rel="external nofollow">Paragon S</a> - $121500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/SM722" rel="external nofollow">SM722</a> - $125800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Paragon_R" rel="external nofollow">Paragon R</a> - $127600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Corsita" rel="external nofollow">Corsita</a> - $127900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Khamelion" rel="external nofollow">Khamelion</a> - $129700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/V-STR" rel="external nofollow">V-STR</a> - $290400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Banshee_GTS" rel="external nofollow">Banshee GTS</a> - $1450000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Locust_(HD_Universe)" rel="external nofollow">Locust</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Itali_GTO_(HD_Universe)" rel="external nofollow">Itali GTO</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Itali_RSX" rel="external nofollow">Itali RSX</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/10F" rel="external nofollow">10F</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Neo" rel="external nofollow">Neo</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/10F_Widebody" rel="external nofollow">10F Widebody</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Niobe" rel="external nofollow">Niobe</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stinger_TT" rel="external nofollow">Itali GTO Stinger TT</a> - $1890000 
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>SUPERCARS</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Voltic" rel="external nofollow">Voltic</a> - $33700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sultan_RS" rel="external nofollow">Sultan RS</a> - $34300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/SC1" rel="external nofollow">SC1</a> - $97500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bullet" rel="external nofollow">Bullet</a> - $155000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vacca" rel="external nofollow">Vacca</a> - $240000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Infernus" rel="external nofollow">Infernus</a> - $440000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zentorno" rel="external nofollow">Zentorno</a> - $725000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Entity_XXR" rel="external nofollow">Entity XXR</a> - $795000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Entity_XF" rel="external nofollow">Entity XF</a> - $795000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Entity_MT" rel="external nofollow">Entity MT</a> - $850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Adder" rel="external nofollow">Adder</a> - $1000000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cheetah_(HD_Universe)" rel="external nofollow">Cheetah</a> - $1000000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/811" rel="external nofollow">811</a> - $1135000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zeno" rel="external nofollow">Zeno</a> - $1250000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/GP1" rel="external nofollow">GP1</a> - $1260000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nero" rel="external nofollow">Nero</a> - $1440000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nero_Custom" rel="external nofollow">Nero Custom</a> - $1480000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Furia" rel="external nofollow">Furia</a> - $1480000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vagner" rel="external nofollow">Vagner</a> - $1535000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zorrusso" rel="external nofollow">Zorrusso</a> - $1550000
+		</p>
+
+		<p>
+			<a href="http://Tempesta" rel="external nofollow">Tempesta</a> - $1593000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Reaper" rel="external nofollow">Reaper</a> - $1595000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/LM87" rel="external nofollow">LM87</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/RE-7B" rel="external nofollow">RE-7B</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Itali_GTB_(HD_Universe)" rel="external nofollow">Itali GTB</a> - $1650000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/FMJ" rel="external nofollow">FMJ</a> - $1750000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Penetrator" rel="external nofollow">Penetrator</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Turismo_Omaggio" rel="external nofollow">Turismo Omaggio</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tigon" rel="external nofollow">Tigon</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Turismo_R" rel="external nofollow">Turismo R</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Deveste_Eight" rel="external nofollow">Deveste Eight</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/S80RR" rel="external nofollow">S80RR</a> - $1850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cyclone" rel="external nofollow">Cyclone</a> - $1890000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Autarch" rel="external nofollow">Autarch</a> - $1950000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Pipistrello" rel="external nofollow">Pipistrello</a> - $1950000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Osiris" rel="external nofollow">Osiris</a> - $1950000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Champion" rel="external nofollow">Champion</a> - $1950000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Taipan" rel="external nofollow">Taipan</a> - $1985000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/ETR1" rel="external nofollow">ETR1</a> - $1995000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/T20" rel="external nofollow">T20</a> - $2200000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Visione" rel="external nofollow">Visione</a> - $2250000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Thrax" rel="external nofollow">Thrax</a> - $2350000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/XA-21" rel="external nofollow">XA-21</a> - $2375000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tyrant" rel="external nofollow">Tyrant</a> - $2515000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tyrus" rel="external nofollow">Tyrus</a> - $2550000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/X80_Proto" rel="external nofollow">X80 Proto</a> - $2700000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Emerus" rel="external nofollow">Emerus</a> - $2750000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Virtue" rel="external nofollow">Virtue</a> - $2850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tezeract" rel="external nofollow">Tezeract</a> - $2850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ignus" rel="external nofollow">Ignus</a> - $2850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Krieger" rel="external nofollow">Krieger</a> - $2850000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Torero_XO" rel="external nofollow">Torero XO</a> - $3350000
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>MOTOCYKLE</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Faggio_Sport" rel="external nofollow">Faggio Sport</a> - $500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Faggio_(HD_Universe)" rel="external nofollow">Faggio</a> - $600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Pizza_Boy_(HD_Universe)" rel="external nofollow">Pizza boy</a> - $600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Faggio_Mod" rel="external nofollow">Faggio Mod</a> - $700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rat_Bike" rel="external nofollow">Rat Bike</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Daemon" rel="external nofollow">Daemon</a> - $5500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Daemon_(custom)" rel="external nofollow">Daemon Custom</a> - $5500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Wolfsbane" rel="external nofollow">Wolfsbane</a> - $5700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hexer" rel="external nofollow">Hexer</a> - $5800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sanchez" rel="external nofollow">Sanchez</a> - $5800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sanchez_(livery)" rel="external nofollow">Sanchez</a> - $5800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Avarus" rel="external nofollow">Avarus</a> - $5800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Manchez_Scout_C" rel="external nofollow">Manchez Scout C</a> - $6000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Esskey" rel="external nofollow">Esskey</a> - $6000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Manchez" rel="external nofollow">Manchez</a> - $6000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Manchez_Scout" rel="external nofollow">Manchez Scout</a> - $6000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Enduro" rel="external nofollow">Enduro</a> - $6500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zombie_Bobber" rel="external nofollow">Zombie Bobber</a> - $6700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cliffhanger" rel="external nofollow">Cliffhanger</a> - $6800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Innovation" rel="external nofollow">Innovation</a> - $7100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Defiler" rel="external nofollow">Defiler</a> - $7500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sovereign" rel="external nofollow">Sovereign</a> - $7500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Diabolus" rel="external nofollow">Diabolus</a> - $7900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bagger" rel="external nofollow">Bagger</a> - $8000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/PCJ_600" rel="external nofollow">PCJ 600</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bati_800" rel="external nofollow">Bati 801</a> - $10500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Thrust" rel="external nofollow">Thrust</a> - $10500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Chimera" rel="external nofollow">Chimera</a> - $10800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bati_Custom" rel="external nofollow">Bati 801RR</a> - $12500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Carbon_RS" rel="external nofollow">Carbon RS</a> - $12800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vader" rel="external nofollow">Vader</a> - $13000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Akuma" rel="external nofollow">Akuma</a> - $13200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Zombie" rel="external nofollow">Zombie Chopper</a> - $13600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Ruffian" rel="external nofollow">Ruffian</a> - $13600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Stryder" rel="external nofollow">Stryder</a> - $14200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/FCR_1000" rel="external nofollow">FCR 1000</a> - $14200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Powersurge" rel="external nofollow">Powersurge</a> - $14800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nemesis" rel="external nofollow">Nemesis</a> - $14900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vortex_(motorcycle)" rel="external nofollow">Vortex</a> - $15000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Shinobi" rel="external nofollow">Shinobi</a> - $15000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vindicator" rel="external nofollow">Vindicator</a> - $15500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/FCR_1000_Custom" rel="external nofollow">FCR 1000 Custom</a> - $15600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hakuchou" rel="external nofollow">Hakuchou</a> - $15600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/BF-400" rel="external nofollow">BF400</a> - $15700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Diabolus_Custom" rel="external nofollow">Diabolus Custom</a> - $16000
+		</p>
+
+		<p>
+			<a href="http://Lectro" rel="external nofollow">Lectro</a> - $16100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Double_T" rel="external nofollow">Double-T</a> - $16200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Nightblade" rel="external nofollow">Nightblade</a> - $16300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Reever" rel="external nofollow">Reever</a> - $17000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hakuchou_Custom" rel="external nofollow">Hakuchou Drag</a> - $17300
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>OFF-ROAD</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Boor" rel="external nofollow">Boor</a> - $1800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bodhi" rel="external nofollow">Bodhi</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Duneloader" rel="external nofollow">Duneloader</a> - $3800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rancher_XL" rel="external nofollow">Rancher XL</a> - $5100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rusty_Rebel" rel="external nofollow">Rusty Rebel</a> - $5300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Injection" rel="external nofollow">Injection</a> - $7000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Verus" rel="external nofollow">Verus</a> - $7500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Blazer" rel="external nofollow">Blazer</a> - $7500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hot_Rod_Blazer" rel="external nofollow">Hot Rod Blazer</a> - $7500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bifta" rel="external nofollow">Bifta</a> - $8100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Hellion" rel="external nofollow">Hellion</a> - $8300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/MonstroCiti" rel="external nofollow">MonstroCiti</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Firebolt_ASP" rel="external nofollow">Firebolt ASP</a> - $9300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Outlaw" rel="external nofollow">Outlaw</a> - $9400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Yosemite_1500" rel="external nofollow">Yosemite 1500</a> - $10400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rebel" rel="external nofollow">Rebel</a> - $13800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Yosemite_Rancher" rel="external nofollow">Yosemite Rancher</a> - $13900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sandking_XL" rel="external nofollow">Sandking XL</a> - $15400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Walton_L35" rel="external nofollow">Walton L35</a> - $16200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Everon" rel="external nofollow">Everon</a> - $16900
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Mesa_(off-road)" rel="external nofollow">Mesa</a> - $17000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Sandking_SWB" rel="external nofollow">Sandking SWB</a> - $17400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Riata" rel="external nofollow">Riata</a> - $19000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Caracara_4x4" rel="external nofollow">Caracara 4x4</a> - $19100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Freecrawler" rel="external nofollow">Freecrawler</a> - $22100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Kamacho" rel="external nofollow">Kamacho</a> - $25700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Brawler" rel="external nofollow">Brawler</a> - $28300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Vagrant" rel="external nofollow">Vagrant</a> - $28500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Terminus" rel="external nofollow">Terminus</a> - $46200
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dubsta_6x6" rel="external nofollow">Dubsta 6x6</a> - $57000
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>FURGONETKI</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Surfer_(rusted)" rel="external nofollow">Surfer</a> - $3000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Minivan" rel="external nofollow">Minivan</a> - $4400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Journey" rel="external nofollow">Journey</a> - $5000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Camper_(HD_Universe)" rel="external nofollow">Camper</a> - $5300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Speedo" rel="external nofollow">Speedo</a> - $6100
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Pony" rel="external nofollow">Pony</a> - $6700
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Paradise" rel="external nofollow">Paradise</a> - $6800
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Youga" rel="external nofollow">Youga</a> - $8000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Burrito_(HD_Universe)" rel="external nofollow">Burrito</a> - $8000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bison" rel="external nofollow">Bison</a> - $8600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Rumpo_Custom" rel="external nofollow">Rumpo Custom</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Youga_Classic" rel="external nofollow">Youga Classic</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Journey_II" rel="external nofollow">Journey II</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Youga_Classic_4x4" rel="external nofollow">Youga Classic 4x4</a> - $9000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bison_(McGill-Olsen)" rel="external nofollow">Bison (McGill-Olsen)</a> - $9300
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bison_(The_Mighty_Bush)" rel="external nofollow">Bison (The Mighty Bush)</a> - $9500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Bobcat_XL" rel="external nofollow">Bobcat XL</a> - $10600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Surfer" rel="external nofollow">Surfer</a> - $11100 <span style="color:#f39c12;">*Możliwy brak dostępności!</span>
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Youga_Custom" rel="external nofollow">Youga Custom</a> - $15000
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>ROWERY</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/BMX_(HD_Universe)" rel="external nofollow">BMX</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cruiser_(bike)" rel="external nofollow">Cruiser</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Fixter" rel="external nofollow">Fixter</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Endurex_Race_Bike" rel="external nofollow">Endurex Race Bike</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tri-Cycles_Race_Bike" rel="external nofollow">Tri-Cycles Race Bike</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Scorcher" rel="external nofollow">Scorcher</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Whippet_Race_Bike" rel="external nofollow">Whippet Race Bike</a> - $480
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Inductor" rel="external nofollow">Inductor</a> - $600
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Junk_Energy_Inductor" rel="external nofollow">Junk Energy Inductor</a> - $600
+		</p>
+	</div>
+</div>
+
+<p style="text-align:center;">
+	<strong>ŁODZIE</strong>
+</p>
+
+<div class="ipsSpoiler" data-ipsspoiler="">
+	<div class="ipsSpoiler_header">
+		<span>Spoiler</span>
+	</div>
+
+	<div class="ipsSpoiler_contents">
+		<p>
+			<a href="https://gta.fandom.com/wiki/Seashark" rel="external nofollow">Seashark</a> - $2400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Seashark_(slimline)" rel="external nofollow">Seashark</a> - $3400
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dinghy_(2-seater)" rel="external nofollow">Dinghy</a> - $4000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dinghy_(HD_Universe)" rel="external nofollow">Dinghy</a> - $5000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dinghy_(heist)" rel="external nofollow">Dinghy</a> - $5500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Dinghy_(slimline)" rel="external nofollow">Dinghy</a> - $6500
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Suntrap" rel="external nofollow">Suntrap</a> - $12000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Tropic" rel="external nofollow">Tropic</a> - $20000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Toro" rel="external nofollow">Toro</a> - $25000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Speeder_(boat)" rel="external nofollow">Speeder</a> - $25000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Speeder_(slimline)" rel="external nofollow">Speeder</a> - $25000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Marquis" rel="external nofollow">Marquis</a> - $30000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Squalo_(HD_Universe)" rel="external nofollow">Squalo</a> - $40000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Cuban_Jetmax" rel="external nofollow">Jetmax</a> - $50000
+		</p>
+
+		<p>
+			<a href="https://gta.fandom.com/wiki/Longfin" rel="external nofollow">Longfin</a> - $80000
+		</p>
+	</div>
+</div>
+</template>
+
+<script>
+/* PageImages API: zwraca thumbnail.source (stabilne URL-e), zamiast zgadywania ścieżek CDN [web:22] */
+const WIKI_API = "https://gta.fandom.com/api.php";
+const THUMB_SIZE = 360;
+const CONCURRENCY = 20;
+
+const elGrid = document.getElementById("grid");
+const elQ = document.getElementById("q");
+const elCat = document.getElementById("cat");
+const elCount = document.getElementById("count");
+const elStatus = document.getElementById("status");
+
+function normalizeUrl(url){
+  // W danych bywają błędne href typu http://Astron [file:1]
+  if (!url) return "";
+  if (url.startsWith("https://gta.fandom.com/wiki/")) return url;
+  const m = url.match(/^http:\/\/([^\/\s]+)/i);
+  if (m) return "https://gta.fandom.com/wiki/" + m[1];
+  return url;
+}
+
+function pageTitleFromWikiUrl(url){
+  const m = url.match(/\/wiki\/([^#?]+)/i);
+  return m ? m[1] : "";
+}
+
+function parseForumHtml(){
+  const tpl = document.getElementById("forumDump");
+  const frag = tpl.content.cloneNode(true);
+
+  let currentCategory = "INNE";
+  const vehicles = [];
+
+  const walker = document.createTreeWalker(frag, NodeFilter.SHOW_ELEMENT);
+
+  while (walker.nextNode()){
+    const el = walker.currentNode;
+
+    if (el.tagName === "STRONG"){
+      const t = (el.textContent || "").trim();
+      if (t) currentCategory = t;
+      continue;
+    }
+
+    if (el.tagName === "A"){
+      const url = normalizeUrl(el.getAttribute("href") || "");
+      const name = (el.textContent || "").trim();
+
+      if (!url.startsWith("https://gta.fandom.com/wiki/")) continue;
+      if (!name) continue;
+
+      let price = "";
+      let note = "";
+      const p = el.closest ? el.closest("p") : null;
+      if (p){
+        const txt = (p.textContent || "");
+        const m = txt.match(/\-\s*\$?\s*([\d,]+)/);
+        if (m) price = m[1].replace(/[^\d]/g,"");
+        if (txt.includes("Możliwy brak dostępności")) note = "Możliwy brak dostępności!";
+      }
+
+      vehicles.push({
+        name,
+        url,
+        pageTitle: pageTitleFromWikiUrl(url),
+        category: currentCategory,
+        price,
+        note
+      });
+    }
+  }
+
+  // Dedupe po URL
+  const seen = new Set();
+  return vehicles.filter(v => (seen.has(v.url) ? false : (seen.add(v.url), true)));
+}
+
+function apiUrlForTitle(pageTitle){
+  const params = new URLSearchParams({
+    action:"query",
+    format:"json",
+    origin:"*",
+    redirects:"1",
+    titles: pageTitle,
+    prop:"pageimages",
+    piprop:"thumbnail",
+    pithumbsize: String(THUMB_SIZE)
+  });
+  return `${WIKI_API}?${params.toString()}`;
+}
+
+const thumbCache = new Map(); // pageTitle -> src
+async function fetchThumb(pageTitle){
+  if (!pageTitle) return "";
+  if (thumbCache.has(pageTitle)) return thumbCache.get(pageTitle);
+
+  const r = await fetch(apiUrlForTitle(pageTitle));
+  const j = await r.json();
+  const pages = j?.query?.pages || {};
+  const firstKey = Object.keys(pages)[0];
+  const src = pages[firstKey]?.thumbnail?.source || "";
+
+  thumbCache.set(pageTitle, src);
+  return src;
+}
+
+function fillCategories(all){
+  const cats = [...new Set(all.map(v=>v.category))].sort((a,b)=>a.localeCompare(b,"pl"));
+  for (const c of cats){
+    const o = document.createElement("option");
+    o.value = c; o.textContent = c;
+    elCat.appendChild(o);
+  }
+}
+
+function fmtPrice(p){ return p ? `${p}$` : ""; }
+
+function render(list, total){
+  elGrid.innerHTML = "";
+  elCount.textContent = `Widoczne: ${list.length} / ${total}`;
+
+  for (const v of list){
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img class="thumb" alt="${v.name}" data-title="${v.pageTitle}">
+      <div class="meta">
+        <p class="name"><a href="${v.url}" target="_blank" rel="noopener">${v.name}</a></p>
+        <div class="row">
+          <span class="badge">${v.category}</span>
+          ${v.price ? `<span class="price">${fmtPrice(v.price)}</span>` : ``}
+          ${v.note ? `<span class="warn">${v.note}</span>` : ``}
+        </div>
+      </div>
+    `;
+    elGrid.appendChild(card);
+  }
+}
+
+async function loadThumbsForCurrentView(){
+  const imgs = [...document.querySelectorAll("img.thumb")];
+  let idx = 0;
+  let done = 0;
+
+  elStatus.textContent = `Ładowanie obrazów: 0 / ${imgs.length}`;
+
+  async function worker(){
+    while (idx < imgs.length){
+      const i = idx++;
+      const img = imgs[i];
+      const title = img.getAttribute("data-title");
+      try{
+        const src = await fetchThumb(title);
+        if (src) img.src = src;
+      }catch(e){
+        // placeholder zostaje
+      }finally{
+        done++;
+        if (done % 10 === 0 || done === imgs.length){
+          elStatus.textContent = `Ładowanie obrazów: ${done} / ${imgs.length}`;
+        }
+      }
+    }
+  }
+
+  const n = Math.min(CONCURRENCY, imgs.length || 1);
+  await Promise.all(Array.from({length:n}, worker));
+  elStatus.textContent = `Obrazy gotowe: ${done} / ${imgs.length}`;
+}
+
+function applyFilter(all){
+  const q = (elQ.value || "").trim().toLowerCase();
+  const c = elCat.value;
+
+  const list = all.filter(v=>{
+    const okC = !c || v.category === c;
+    const okQ = !q || v.name.toLowerCase().includes(q) || (v.price||"").includes(q);
+    return okC && okQ;
+  });
+
+  render(list, all.length);
+  loadThumbsForCurrentView();
+}
+
+(async function main(){
+  const all = parseForumHtml();
+
+  fillCategories(all);
+  render(all, all.length);
+
+  // Załaduj wszystkie miniatury od razu
+  await loadThumbsForCurrentView();
+
+  elQ.addEventListener("input", ()=>applyFilter(all));
+  elCat.addEventListener("change", ()=>applyFilter(all));
+})();
+</script>
+
+</body>
+</
